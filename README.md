@@ -424,11 +424,61 @@ So let's go through those as well to paint a complete picture.
         return frame, labels
 ```
 
+Let's go through these.
+
+`_get_image_from_chunked` is a function that just takes our raw binary
+image, converts it to a Numpy NDArray, and then returns that to the caller.
+
+`score_frame` is a function that takes an Numpy NDArray as input and it 
+passes it to our YOLO model. The YOLO model will go and run all of the 
+detections on that frame. It will then return all of the results that it
+found to the caller.
+
+`class_to_label` is a function that takes an index as input. It then
+searches the class labels in our model, and returns the corresponding item
+for the given index to the user. Essentially, this converts an integer label
+to a human readable string label.
+
+`plot_boxes` takes the results from the `score_frame` function and the initial
+frame. It then loops through each result from `score_frame` and draws a bounding
+box around the coordinates in the image. It then labels that bounding box with
+the human-readable name from `class_to_label`.
+
 ## Putting It All Together
+Now, we have all of our individual components built. Let's add a simple
+`main.py` which acts as our entrypoint to the system:
 
-## Running
+```python
+from uvicorn import Server, Config
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+import os
 
-## Testing
+from yolofastapi.routers import yolo
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_credentials=False,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(yolo.router)
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 80))
+    server = Server(Config(app, host="0.0.0.0", port=port, lifespan="on"))
+    server.run()
+```
+
+All we are doing here is instantiating a new `FastAPI` app and we added our
+`yolo.router` to it which has our two, predefined endpoints.
+
+## Running and Testing
+Let's give this a run and test it out!
 
 ## References
 All code can be found [here on github](https://github.com/afoley587/hosting-yolo-fastapi)!

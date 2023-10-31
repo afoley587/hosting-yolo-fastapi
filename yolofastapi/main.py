@@ -1,5 +1,5 @@
 from uvicorn import Server, Config
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 import os
 

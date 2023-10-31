@@ -495,5 +495,9 @@ INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
 Let's navigate over to a browser at `http://localhost/docs` and you'll see the swagger docs similar to the image below:
 ![swagger docs](./images/swagger-docs.png)
 
+Let's go upload an image, analyze it, and then download it to see the labels! Let's watch the video
+below:
+![demo](./images/demo.gif)
+
 ## References
 All code can be found [here on github](https://github.com/afoley587/hosting-yolo-fastapi)!

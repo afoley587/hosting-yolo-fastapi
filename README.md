@@ -3,6 +3,8 @@
 ## Introduction
 In the ever-evolving landscape of computer vision and machine learning, two powerful technologies have emerged as key players in their respective domains: YOLO (You Only Look Once) and FastAPI. YOLO has gained fame for its real-time object detection capabilities, while FastAPI has earned a reputation as one of the most efficient and user-friendly web frameworks for building APIs. In this blog post, we'll explore the exciting synergy that can be achieved by hosting YOLOv8, a state-of-the-art YOLO variant, with FastAPI.
 
+![FastAPI And YOLO](./images/top-view.png)
+
 First, let's briefly introduce FastAPI. FastAPI is a Python web framework that simplifies the development of APIs with incredible speed and ease. It is designed for high-performance and productivity, offering automatic generation of interactive documentation and type hints, which are a boon for developers. With FastAPI, you can build robust APIs quickly, making it an ideal choice for integrating machine learning models, like YOLOv8, into web applications.
 
 On the other side of the equation is YOLO, a groundbreaking object detection model that has become a cornerstone of computer vision applications. YOLO excels at identifying objects in images and video streams in real-time. YOLOv8 is the latest iteration, bringing even more accuracy and speed to the table. Combining the power of YOLOv8 with the efficiency of FastAPI opens up exciting possibilities for building interactive and efficient object detection applications.
@@ -498,6 +500,8 @@ Let's navigate over to a browser at `http://localhost/docs` and you'll see the s
 Let's go upload an image, analyze it, and then download it to see the labels! Let's watch the video
 below:
 ![demo](./images/demo.gif)
+
+You have now successfully hosted your first machine learning API with python!
 
 ## References
 All code can be found [here on github](https://github.com/afoley587/hosting-yolo-fastapi)!

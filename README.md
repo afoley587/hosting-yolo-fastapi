@@ -482,7 +482,7 @@ All we are doing here is instantiating a new `FastAPI` app and we added our
 ## Running and Testing
 Let's give this a run and test it out!
 
-Before you give it a run, you can checkout and install the requirements defined in the [requirements.txt in GitHub]().
+Before you give it a run, you can checkout and install the requirements defined in the [requirements.txt in GitHub](https://github.com/afoley587/hosting-yolo-fastapi/blob/master/requirements.txt).
 
 After you install those, we can run our API:
 

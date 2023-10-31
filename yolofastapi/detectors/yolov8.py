@@ -1,11 +1,15 @@
+# For machine learning
 import torch
+# For array computations
 import numpy as np
+# For image decoding / editing
 import cv2
+# For environment variables
 import os
+# For detecting which ML Devices we can use
 import platform
+# For actually using the YOLO models
 from ultralytics import YOLO
-# from ultralytics.yolo.utils.plotting import Annotator
-
 
 class YoloV8ImageObjectDetection:
     PATH        = os.environ.get("YOLO_WEIGHTS_PATH", "yolov8n.pt")    # Path to a model. yolov8n.pt means download from PyTorch Hub
@@ -34,6 +38,29 @@ class YoloV8ImageObjectDetection:
             return "cuda"
         return "cpu"
 
+    def _load_model(self):
+        """Loads Yolo8 model from pytorch hub or a path on disk
+
+        Returns:
+            model (Model) - Trained Pytorch model
+        """
+        model = YOLO(YoloV8ImageObjectDetection.PATH)
+        return model
+
+    async def __call__(self):
+        """This function is called when class is executed.
+        It analyzes a single image passed to its constructor
+        and returns the annotated image and its labels
+        
+        Returns:
+            frame (numpy.ndarray): Frame with bounding boxes and labels ploted on it.
+            labels (list(str)): The corresponding labels that were found
+        """
+        frame = self._get_image_from_chunked()
+        results = self.score_frame(frame)
+        frame, labels = self.plot_boxes(results, frame)
+        return frame, set(labels)
+    
     def _get_image_from_chunked(self):
         """Loads an openCV image from the raw image bytes passed by
         the API.
@@ -44,17 +71,7 @@ class YoloV8ImageObjectDetection:
         arr = np.asarray(bytearray(self._bytes), dtype=np.uint8)
         img = cv2.imdecode(arr, -1)  # 'Load it as it is'
         return img
-
-
-    def _load_model(self):
-        """Loads Yolo8 model from pytorch hub or a path on disk
-
-        Returns:
-            model (Model) - Trained Pytorch model
-        """
-        model = YOLO(YoloV8ImageObjectDetection.PATH)
-        return model
-
+    
     def score_frame(self, frame):
         """Scores a single image with a YoloV8 model
 
@@ -104,17 +121,3 @@ class YoloV8ImageObjectDetection:
                 labels.append(l)
         frame = results[0].plot()
         return frame, labels
-
-    async def __call__(self):
-        """This function is called when class is executed.
-        It analyzes a single image passed to its constructor
-        and returns the annotated image and its labels
-        
-        Returns:
-            frame (numpy.ndarray): Frame with bounding boxes and labels ploted on it.
-            labels (list(str)): The corresponding labels that were found
-        """
-        frame = self._get_image_from_chunked()
-        results = self.score_frame(frame)
-        frame, labels = self.plot_boxes(results, frame)
-        return frame, set(labels)

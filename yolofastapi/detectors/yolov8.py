@@ -13,7 +13,7 @@ from ultralytics import YOLO
 
 class YoloV8ImageObjectDetection:
     PATH        = os.environ.get("YOLO_WEIGHTS_PATH", "yolov8n.pt")    # Path to a model. yolov8n.pt means download from PyTorch Hub
-    CONF_THRESH = float(os.environ.get("YOLO_CONF_THRESHOLD", "0.10")) # Confidence threshold
+    CONF_THRESH = float(os.environ.get("YOLO_CONF_THRESHOLD", "0.70")) # Confidence threshold
 
     def __init__(self, chunked: bytes = None):
         """Initializes a yolov8 detector with a binary image
